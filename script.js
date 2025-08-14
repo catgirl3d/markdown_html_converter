@@ -4,6 +4,7 @@ class MarkdownConverter {
         this.output = document.getElementById('output');
         this.preserveBreaksCheckbox = document.getElementById('preserveBreaks');
         this.enableFormattingCheckbox = document.getElementById('enableFormatting');
+        this.replaceNameCheckbox = document.getElementById('replaceName');
         
         this.initEventListeners();
         this.convert(); // Конвертируем начальный текст
@@ -13,24 +14,27 @@ class MarkdownConverter {
         this.markdownInput.addEventListener('input', () => this.convert());
         this.preserveBreaksCheckbox.addEventListener('change', () => this.convert());
         this.enableFormattingCheckbox.addEventListener('change', () => this.convert());
+        this.replaceNameCheckbox.addEventListener('change', () => this.convert());
 
         // Новые кнопки
         this.copyMarkdownBtn = document.getElementById('copyMarkdownBtn');
         this.pasteMarkdownBtn = document.getElementById('pasteMarkdownBtn');
         this.clearInputBtn = document.getElementById('clearInputBtn');
         this.copyHtmlBtn = document.getElementById('copyHtmlBtn');
-        this.copyFullHtmlBtn = document.getElementById('copyFullHtmlBtn');
         this.downloadHtmlBtn = document.getElementById('downloadHtmlBtn');
 
         this.copyMarkdownBtn.addEventListener('click', () => this.copyMarkdown());
         this.pasteMarkdownBtn.addEventListener('click', () => this.pasteFromClipboard());
         this.clearInputBtn.addEventListener('click', () => this.clearInput());
         this.copyHtmlBtn.addEventListener('click', () => this.copyHtmlOutput());
-        this.copyFullHtmlBtn.addEventListener('click', () => this.copyFullHtmlDocument());
         this.downloadHtmlBtn.addEventListener('click', () => this.downloadHtml());
 
         // Сочетания клавиш
         document.addEventListener('keydown', (event) => this.handleKeyboardShortcuts(event));
+        // Add event listener to output div to make it focusable on click
+        this.output.addEventListener('click', () => {
+            this.output.focus();
+        });
     }
 
     showNotification(message, type = 'success') {
@@ -110,29 +114,6 @@ class MarkdownConverter {
         this.copyToClipboard(this.output.innerHTML);
     }
 
-    copyFullHtmlDocument() {
-        const fullHtml = `<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Output</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        /* Встроенные стили для базового отображения, если style.css недоступен */
-        body { font-family: sans-serif; line-height: 1.6; margin: 20px; }
-        pre { background: #f4f4f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
-        code { font-family: monospace; }
-        blockquote { border-left: 4px solid #ccc; padding-left: 10px; color: #555; }
-        /* Добавьте сюда другие важные стили из style.css, если нужно */
-    </style>
-</head>
-<body>
-    ${this.output.innerHTML}
-</body>
-</html>`;
-        this.copyToClipboard(fullHtml);
-    }
 
     downloadHtml() {
         const fullHtml = `<!DOCTYPE html>
@@ -185,17 +166,30 @@ class MarkdownConverter {
             }
         }
 
-        // Ctrl/Cmd + Shift + C для копирования полного HTML-документа
-        if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === 'C') {
-            event.preventDefault();
-            this.copyFullHtmlDocument();
+        // Ctrl/Cmd + A для выделения всего в output области
+        if ((event.ctrlKey || event.metaKey) && event.key === 'a') {
+            if (document.activeElement === this.output) {
+                event.preventDefault();
+                // Выделяем весь контент в output области
+                const selection = window.getSelection();
+                const range = document.createRange();
+                range.selectNodeContents(this.output);
+                selection.removeAllRanges();
+                selection.addRange(range);
+            }
         }
     }
 
     convert() {
-        const markdown = this.markdownInput.value;
+        let markdown = this.markdownInput.value;
         const preserveBreaks = this.preserveBreaksCheckbox.checked;
         const enableFormatting = this.enableFormattingCheckbox.checked;
+        const replaceName = this.replaceNameCheckbox.checked;
+
+        // Замена слова "имя" на {first_name}
+        if (replaceName) {
+            markdown = markdown.replace(/имя/gi, '{first_name}');
+        }
 
         let html = this.markdownToHtml(markdown, preserveBreaks, enableFormatting);
 

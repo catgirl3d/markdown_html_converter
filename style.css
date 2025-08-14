@@ -175,6 +175,10 @@ textarea:focus {
     background: #fafafa;
     overflow-y: auto;
     border-left: 1px solid #e0e0e0;
+    user-select: text;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
 }
 
 .output h1, .output h2, .output h3, .output h4, .output h5, .output h6 {
