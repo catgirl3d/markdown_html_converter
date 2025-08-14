@@ -11,16 +11,40 @@
         <div class="header">
             <h1>Markdown → HTML</h1>
             <p>Конвертор с поддержкой разметки и переносов строк</p>
+            <div class="features-hint">
+                <p><strong>Новые функции:</strong></p>
+                <ul>
+                    <li>Кнопки для копирования Markdown, вставки, очистки, копирования HTML-вывода, копирования полного HTML-документа и скачивания HTML.</li>
+                    <li>Кнопка "Копировать" для каждого блока кода в HTML-выводе.</li>
+                    <li><strong>Сочетания клавиш:</strong>
+                        <ul>
+                            <li><code>Ctrl/Cmd + V</code>: Вставить Markdown</li>
+                            <li><code>Ctrl/Cmd + C</code> (при фокусе на HTML-выводе): Копировать HTML-вывод</li>
+                            <li><code>Ctrl/Cmd + Shift + C</code>: Копировать полный HTML-документ</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
         </div>
         
         <div class="controls">
-            <div class="checkbox-container">
-                <input type="checkbox" id="preserveBreaks" checked>
-                <label for="preserveBreaks">Сохранять переносы строк</label>
+            <div class="checkbox-group">
+                <div class="checkbox-container">
+                    <input type="checkbox" id="preserveBreaks" checked>
+                    <label for="preserveBreaks">Сохранять переносы строк</label>
+                </div>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="enableFormatting" checked>
+                    <label for="enableFormatting">Включить форматирование</label>
+                </div>
             </div>
-            <div class="checkbox-container">
-                <input type="checkbox" id="enableFormatting" checked>
-                <label for="enableFormatting">Включить форматирование</label>
+            <div class="button-group">
+                <button id="copyMarkdownBtn" class="control-button" aria-label="Копировать Markdown">Копировать Markdown</button>
+                <button id="pasteMarkdownBtn" class="control-button" aria-label="Вставить Markdown">Вставить</button>
+                <button id="clearInputBtn" class="control-button" aria-label="Очистить ввод">Очистить</button>
+                <button id="copyHtmlBtn" class="control-button" aria-label="Копировать HTML вывод">Копировать HTML</button>
+                <button id="copyFullHtmlBtn" class="control-button" aria-label="Копировать полный HTML документ">Копировать полный HTML</button>
+                <button id="downloadHtmlBtn" class="control-button" aria-label="Скачать HTML файл">Скачать HTML</button>
             </div>
         </div>
         

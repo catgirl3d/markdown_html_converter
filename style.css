@@ -40,6 +40,47 @@ body {
     font-size: 1.1em;
 }
 
+.header p {
+    opacity: 0.9;
+    font-size: 1.1em;
+    margin-bottom: 20px; /* Добавляем отступ снизу */
+}
+
+.features-hint {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: left;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.features-hint p {
+    font-size: 1em;
+    margin-bottom: 10px;
+    opacity: 1;
+}
+
+.features-hint ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.features-hint li {
+    margin-bottom: 5px;
+    font-size: 0.95em;
+}
+
+.features-hint code {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #ffe082; /* Светло-желтый для кода */
+}
+
 .controls {
     padding: 30px;
     background: rgba(255, 255, 255, 0.8);
@@ -240,6 +281,108 @@ textarea:focus {
     .checkbox-container {
         justify-content: center;
     }
+
+    .button-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .control-button {
+        width: 100%;
+    }
+}
+
+.checkbox-group {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.control-button {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    outline: none;
+}
+
+.control-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.control-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для кнопки копирования в блоках кода */
+.copy-code-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    cursor: pointer;
+    opacity: 0; /* Скрываем по умолчанию */
+    transition: opacity 0.3s ease;
+}
+
+.output pre:hover .copy-code-button {
+    opacity: 1; /* Показываем при наведении на pre */
+}
+
+/* Стили для уведомлений (тостов) */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background-color: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 0.9em;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.notification.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.notification.error {
+    background-color: #dc3545; /* Красный для ошибок */
+}
+
+.notification.success {
+    background-color: #28a745; /* Зеленый для успеха */
 }
 
 .fade-in {
